@@ -26,4 +26,22 @@ class Util {
   public static function titleCaseIfCurrentlyAllCaps($text) {
     return (strtoupper($text) === $text ? ucwords(strtolower($text)) : $text);
   }
+
+  private static $commonAbbreviationsForUnknownPlayer = array(
+    '?', 'nn', 'anonymous', 'unknown'
+  );
+
+  public static function normalizePlayerName($name) {
+    if (in_array(strtolower($name), self::$commonAbbreviationsForUnknownPlayer)) {
+      return null;
+    }
+
+    $name = self::foreignLettersToEnglishLetters($name);
+    $name = self::titleCaseIfCurrentlyAllCaps($name);
+
+    // Some cultures abbreviate with .. unlike English which uses a single dot.
+    $name = str_replace('..', '.', $name);
+
+    return $name;
+  }
 }

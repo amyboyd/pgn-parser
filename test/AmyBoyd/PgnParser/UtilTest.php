@@ -24,4 +24,21 @@ class UtilTest extends PHPUnit_Framework_TestCase {
       Util::titleCaseIfCurrentlyAllCaps('KE$HA')
     );
   }
+
+  public function testNormalizePlayerName() {
+    $this->assertNull(
+      Util::normalizePlayerName('?')
+    );
+    $this->assertNull(
+      Util::normalizePlayerName('ANONYMOUS')
+    );
+    $this->assertEquals(
+      'Saaa b. uaaa',
+      Util::normalizePlayerName('Šaaa b.. ùaaa')
+    );
+    $this->assertEquals(
+      'Garry Kasparov',
+      Util::normalizePlayerName('GARRY KASPAROV')
+    );
+  }
 }
