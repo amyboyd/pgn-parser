@@ -7,42 +7,42 @@ class Game
   /**
    * The filename of the PGN database this game came from.
    */
-  private $fromPgnDatabase;
+  protected $fromPgnDatabase;
 
-  private $pgn;
+  protected $pgn;
 
   /**
    * All moves concatenated, with move numbers removed. Example: "e4 e5 f4 exf4".
    */
-  private $moves;
+  protected $moves;
 
-  private $movesCount;
+  protected $movesCount;
 
-  private $event;
+  protected $event;
 
-  private $site;
+  protected $site;
 
   /**
    * Format not guaranteed.
    */
-  private $date;
+  protected $date;
 
-  private $round;
+  protected $round;
 
-  private $white;
+  protected $white;
 
-  private $black;
+  protected $black;
 
-  private $result;
+  protected $result;
 
-  private $whiteElo;
+  protected $whiteElo;
 
-  private $blackElo;
+  protected $blackElo;
 
   /**
    * Opening ECO code.
    */
-  private $eco;
+  protected $eco;
 
   /**
    * Set moves
