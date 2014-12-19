@@ -6,6 +6,4 @@ A PHP parser for the chess game notation format, PGN. There are no external depe
 Tests
 -----
 
-Run `phpunit --bootstrap test/bootstrap.php ./test`
-
-(`./test.command` is a shortcut for that on Linux/Mac.)
+Run `bin/test`
