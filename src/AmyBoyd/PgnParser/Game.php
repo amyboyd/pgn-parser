@@ -2,10 +2,8 @@
 
 namespace AmyBoyd\PgnParser;
 
-use AmyBoyd\PgnParser\PgnParser;
-use AmyBoyd\PgnParser\Util;
-
-class Game {
+class Game
+{
   /**
    * The filename of the PGN database this game came from.
    */
@@ -48,9 +46,10 @@ class Game {
 
   /**
    * Set moves
-   * @param text $moves
+   * @param string $moves
    */
-  public function setMoves($moves) {
+  public function setMoves($moves)
+  {
     $moves = trim($moves);
 
     $this->moves = $moves;
@@ -59,13 +58,15 @@ class Game {
 
     /**
      * Get moves
-     * @return text 
+     * @return string
      */
-  public function getMoves() {
+  public function getMoves()
+  {
     return $this->moves;
   }
 
-  public function getMovesArray() {
+  public function getMovesArray()
+  {
     return explode(' ', $this->moves);
   }
 
@@ -73,11 +74,11 @@ class Game {
      * Set event
      * @param string $event
      */
-  public function setEvent($event) {
+  public function setEvent($event)
+  {
     if ($event === '?' || $event === '') {
       $this->event = null;
-    }
-    else {
+    } else {
       $event = Util::foreignLettersToEnglishLetters($event);
       $event = Util::titleCaseIfCurrentlyAllCaps($event);
       $this->event = $event === '?' ? null : $event;
@@ -86,9 +87,10 @@ class Game {
 
     /**
      * Get event
-     * @return string 
+     * @return string
      */
-  public function getEvent() {
+  public function getEvent()
+  {
     return $this->event;
   }
 
@@ -96,15 +98,14 @@ class Game {
      * Set site
      * @param string $site
      */
-  public function setSite($site) {
+  public function setSite($site)
+  {
     if ($site === '?' || $site === '') {
       $this->site = null;
-    }
-    else if (strlen(preg_replace('/[^a-zA-Z]/', '', $site) < 2)) {
+    } elseif (strlen(preg_replace('/[^a-zA-Z]/', '', $site) < 2)) {
       // Some sites have been non-letter gibberish.
       $this->site = null;
-    }
-    else {
+    } else {
       $site = Util::foreignLettersToEnglishLetters($site);
       $site = Util::titleCaseIfCurrentlyAllCaps($site);
       $this->site = $site;
@@ -113,9 +114,10 @@ class Game {
 
     /**
      * Get site
-     * @return string 
+     * @return string
      */
-  public function getSite() {
+  public function getSite()
+  {
     return $this->site;
   }
 
@@ -123,15 +125,17 @@ class Game {
      * Set date
      * @param string $date
      */
-  public function setDate($date) {
+  public function setDate($date)
+  {
     $this->date = $date;
   }
 
     /**
      * Get date
-     * @return string 
+     * @return string
      */
-  public function getDate() {
+  public function getDate()
+  {
     return $this->date;
   }
 
@@ -139,12 +143,15 @@ class Game {
      * Get year.
      * @return int
      */
-  public function getYear() {
+  public function getYear()
+  {
     if (strlen($this->date) >= 4) {
       $year = substr($this->date, 0, 4);
       $year = str_replace('?', '', $year);
+
       return ($year ? (int) $year : null);
     }
+
     return null;
   }
 
@@ -152,7 +159,8 @@ class Game {
      * Get the date formatted smartly.
      * @return string
      */
-  public function getDatePrettyPrint() {
+  public function getDatePrettyPrint()
+  {
     $date = str_replace('?', '', $this->date);
     $date = explode('.', $date);
     $date = array_filter($date);
@@ -160,11 +168,9 @@ class Game {
     if (count($date) == 2 || count($date) == 3) {
       $month = date('F', mktime(0, 0, 0, $date[1], 1));
       $date = "$month, $date[0]";
-    }
-    else if (count($date) == 1) {
+    } elseif (count($date) == 1) {
       $date = $date[0];
-    }
-    else {
+    } else {
       $date = null;
     }
 
@@ -175,41 +181,37 @@ class Game {
      * Get the event and site concatenated smartly.
      * @return string
      */
-  public function getEventSitePrettyPrint() {
+  public function getEventSitePrettyPrint()
+  {
     $eventSite = null;
     if ($this->event && $this->site) {
       if (strpos($this->event, $this->site) !== false) {
         // Event contains site.
         $eventSite = $this->event;
-      }
-      else {
+      } else {
         $eventSite = "$this->event, in $this->site";
       }
-    }
-    else if ($this->event) {
+    } elseif ($this->event) {
       $eventSite = $this->event;
-    }
-    else if ($this->site) {
+    } elseif ($this->site) {
       $eventSite = $this->site;
     }
 
     return $eventSite;
     }
 
-  public function getEventSiteDatePrettyPrint() {
+  public function getEventSiteDatePrettyPrint()
+  {
     $eventSite = $this->getEventSitePrettyPrint();
     $date = $this->getDatePrettyPrint();
 
     if ($eventSite && $date) {
         return "$eventSite, $date";
-    }
-    else if ($eventSite) {
+    } elseif ($eventSite) {
         return $eventSite;
-    }
-    else if ($date) {
+    } elseif ($date) {
         return $date;
-    }
-    else {
+    } else {
         return null;
     }
   }
@@ -218,15 +220,17 @@ class Game {
    * Set round
    * @param string $round
    */
-  public function setRound($round) {
+  public function setRound($round)
+  {
     $this->round = $round === '?' ? null : $round;
   }
 
   /**
    * Get round
-   * @return string 
+   * @return string
    */
-  public function getRound() {
+  public function getRound()
+  {
     return $this->round;
   }
 
@@ -234,15 +238,17 @@ class Game {
    * Set white
    * @param string $white
    */
-  public function setWhite($white) {
+  public function setWhite($white)
+  {
     $this->white = Util::normalizePlayerName($white);
   }
 
   /**
    * Get white
-   * @return string 
+   * @return string
    */
-  public function getWhite() {
+  public function getWhite()
+  {
     return $this->white;
   }
 
@@ -250,15 +256,17 @@ class Game {
    * Set black
    * @param string $black
    */
-  public function setBlack($black) {
+  public function setBlack($black)
+  {
     $this->black = Util::normalizePlayerName($black);
   }
 
   /**
    * Get black
-   * @return string 
+   * @return string
    */
-  public function getBlack() {
+  public function getBlack()
+  {
     return $this->black;
   }
 
@@ -266,15 +274,17 @@ class Game {
    * Set result
    * @param string $result
    */
-  public function setResult($result) {
+  public function setResult($result)
+  {
     $this->result = ($result === '?' ? null : $result);
   }
 
   /**
    * Get result
-   * @return string 
+   * @return string
    */
-  public function getResult() {
+  public function getResult()
+  {
     return $this->result;
   }
 
@@ -282,15 +292,17 @@ class Game {
    * Set whiteElo
    * @param string $whiteElo
    */
-  public function setWhiteElo($whiteElo) {
+  public function setWhiteElo($whiteElo)
+  {
     $this->whiteElo = $whiteElo === '?' ? null : $whiteElo;
   }
 
   /**
    * Get whiteElo
-   * @return string 
+   * @return string
    */
-  public function getWhiteElo() {
+  public function getWhiteElo()
+  {
     return $this->whiteElo;
   }
 
@@ -298,15 +310,17 @@ class Game {
    * Set blackElo
    * @param string $blackElo
    */
-  public function setBlackElo($blackElo) {
+  public function setBlackElo($blackElo)
+  {
     $this->blackElo = $blackElo === '?' ? null : $blackElo;
   }
 
   /**
    * Get blackElo
-   * @return string 
+   * @return string
    */
-  public function getBlackElo() {
+  public function getBlackElo()
+  {
     return $this->blackElo;
   }
 
@@ -314,39 +328,45 @@ class Game {
    * Set eco
    * @param string $eco
    */
-  public function setEco($eco) {
+  public function setEco($eco)
+  {
     $this->eco = $eco === '?' ? null : $eco;
   }
 
   /**
    * Get eco
-   * @return string 
+   * @return string
    */
-  public function getEco() {
+  public function getEco()
+  {
     return $this->eco;
   }
 
   /**
    * Set pgn
-   * @param text $pgn
+   * @param string $pgn
    */
-  public function setPgn($pgn) {
+  public function setPgn($pgn)
+  {
     $this->pgn = trim($pgn);
   }
 
   /**
    * Get pgn
-   * @return text 
+   * @return string
    */
-  public function getPgn() {
+  public function getPgn()
+  {
     return $this->pgn;
   }
 
-  public function getMovesCount() {
+  public function getMovesCount()
+  {
     return $this->movesCount;
   }
 
-  public function setMovesCount($movesCount) {
+  public function setMovesCount($movesCount)
+  {
     $this->movesCount = $movesCount;
   }
 
@@ -354,7 +374,8 @@ class Game {
    * Set fromPgnDatabase (file name).
    * @param string $fromPgnDatabase
    */
-  public function setFromPgnDatabase($fromPgnDatabase) {
+  public function setFromPgnDatabase($fromPgnDatabase)
+  {
     $this->fromPgnDatabase = $fromPgnDatabase;
   }
 
@@ -362,11 +383,13 @@ class Game {
    * Get fromPgnDatabase
    * @return string File name.
    */
-  public function getFromPgnDatabase() {
+  public function getFromPgnDatabase()
+  {
     return $this->fromPgnDatabase;
   }
 
-  public function toJSON() {
+  public function toJSON()
+  {
     $keys = array('pgn', 'moves', 'movesCount', 'site', 'event',
         'date', 'round', 'white', 'black', 'result', 'whiteElo',
         'blackElo', 'eco');

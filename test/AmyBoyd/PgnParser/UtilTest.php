@@ -2,15 +2,18 @@
 
 use AmyBoyd\PgnParser\Util;
 
-class UtilTest extends PHPUnit_Framework_TestCase {
-  public function testForeignLettersToEnglish() {
+class UtilTest extends PHPUnit_Framework_TestCase
+{
+  public function testForeignLettersToEnglish()
+  {
     $this->assertEquals(
       'S u \' Ss A',
       Util::foreignLettersToEnglishLetters('Š ù ´ ß Æ')
     );
   }
 
-  public function testTitleCaseIfCurrentlyAllCaps() {
+  public function testTitleCaseIfCurrentlyAllCaps()
+  {
     $this->assertEquals(
       'AsD',
       Util::titleCaseIfCurrentlyAllCaps('AsD')
@@ -25,7 +28,8 @@ class UtilTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testNormalizePlayerName() {
+  public function testNormalizePlayerName()
+  {
     $this->assertNull(
       Util::normalizePlayerName('?')
     );

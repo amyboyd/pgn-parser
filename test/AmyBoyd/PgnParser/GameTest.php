@@ -9,12 +9,13 @@ class GameTest extends PHPUnit_Framework_TestCase
     {
         $game = new Game();
         $this->assertEquals(null, $game->getWhite());
- 
+
         $game->setWhite('Amy Boyd');
         $this->assertEquals('Amy Boyd', $game->getWhite());
     }
 
-    public function testToJSON() {
+    public function testToJSON()
+    {
       $file = 'test/data/2010 World Championship.pgn';
       $parser = new PgnParser($file);
       $game = $parser->getGame(5);

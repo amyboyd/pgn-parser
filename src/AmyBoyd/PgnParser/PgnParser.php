@@ -2,9 +2,8 @@
 
 namespace AmyBoyd\PgnParser;
 
-use AmyBoyd\PgnParser\Game;
-
-class PgnParser {
+class PgnParser
+{
   /**
    * Absolute path, e.g. "/path/to/games.pgn".
    * @var string
@@ -32,7 +31,8 @@ class PgnParser {
   /**
    * @param string $filePath The absolute or relative path to a file. Must not be a directory.
    */
-  public function __construct($filePath) {
+  public function __construct($filePath)
+  {
     $this->filePath = $filePath;
     $this->fileName = basename($filePath);
     $this->parse();
@@ -41,31 +41,36 @@ class PgnParser {
   /**
    * @return Game[] All of the games from the file.
    */
-  public function getGames() {
+  public function getGames()
+  {
     return $this->games;
   }
 
   /**
    * @return Game
    */
-  public function getGame($index) {
+  public function getGame($index)
+  {
     return $this->games[$index];
   }
 
   /**
    * @return int How many games were in the file.
    */
-  public function countGames() {
+  public function countGames()
+  {
     return count($this->games);
   }
 
-  private function createCurrentGame() {
+  private function createCurrentGame()
+  {
     $this->currentGame = new Game();
     $this->currentGame->setFromPgnDatabase($this->fileName);
     $this->multiLineAnnotationDepth = 0;
   }
 
-  private function parse() {
+  private function parse()
+  {
     $handle = fopen($this->filePath, "r");
 
     $this->createCurrentGame();
@@ -91,8 +96,7 @@ class PgnParser {
 
         $this->addMetaData($line);
         $pgnBuffer .= $line . "\n";
-      }
-      else {
+      } else {
         // This is a line of moves.
         $this->addMoves($line);
         $haveMoves = true;
@@ -105,7 +109,8 @@ class PgnParser {
     fclose($handle);
   }
 
-  private function removeAnnotations($line) {
+  private function removeAnnotations($line)
+  {
     $result = null;
     foreach (str_split($line) as $char) {
       if ($char === '{' || $char === '(') {
@@ -118,13 +123,15 @@ class PgnParser {
         $this->multiLineAnnotationDepth--;
       }
     }
+
     return $result;
   }
 
   /**
    * @param string $line "[Date "1953.??.??"]"
    */
-  private function addMetaData($line) {
+  private function addMetaData($line)
+  {
     if (strpos($line, ' ') === false) {
       throw new \Exception("Invalid metadata: " . $line);
     }
@@ -179,7 +186,8 @@ class PgnParser {
   /**
    * @param string $line "Qe7 22. Nhg4 Nxg4 23. Nxg4 Na5 24. b3 Nc6"
    */
-  private function addMoves($line) {
+  private function addMoves($line)
+  {
     $line = $this->removeAnnotations($line);
 
     // Remove the move numbers, so "1. e4 e5 2. f4" becomes "e4 e5 f4"
@@ -201,7 +209,8 @@ class PgnParser {
     $this->currentGame->setMoves($this->currentGame->getMoves() ? $this->currentGame->getMoves() . " " . $line : $line);
   }
 
-  private function completeCurrentGame($pgn) {
+  private function completeCurrentGame($pgn)
+  {
     $this->currentGame->setPgn($pgn);
     $this->games[] = $this->currentGame;
     $this->multiLineAnnotationDepth = 0;

@@ -2,8 +2,10 @@
 
 namespace AmyBoyd\PgnParser;
 
-class Util {
-  public static function foreignLettersToEnglishLetters($text) {
+class Util
+{
+  public static function foreignLettersToEnglishLetters($text)
+  {
     static $translations = array(
       'Š' => 'S', 'š' => 's', 'Đ' => 'Dj', 'đ' => 'dj', 'Ž' => 'Z', 'ž' => 'z', 'Č' => 'C', 'č' => 'c', 'Ć' => 'C', 'ć' => 'c',
       'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
@@ -23,7 +25,8 @@ class Util {
     return utf8_decode($text);
   }
 
-  public static function titleCaseIfCurrentlyAllCaps($text) {
+  public static function titleCaseIfCurrentlyAllCaps($text)
+  {
     return (strtoupper($text) === $text ? ucwords(strtolower($text)) : $text);
   }
 
@@ -31,7 +34,8 @@ class Util {
     '?', 'nn', 'anonymous', 'unknown'
   );
 
-  public static function normalizePlayerName($name) {
+  public static function normalizePlayerName($name)
+  {
     if (in_array(strtolower($name), self::$commonAbbreviationsForUnknownPlayer)) {
       return null;
     }
