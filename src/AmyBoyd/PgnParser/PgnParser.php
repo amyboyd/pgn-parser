@@ -200,7 +200,7 @@ class PgnParser
     // Remove those dots (one is already gonee after removing "17." earlier.
     $line = str_replace('..', '', $line);
 
-    $line = preg_replace('/\$[0-9]/', '', $line);
+    $line = preg_replace('/\$[0-9]+/', '', $line);
     $line = preg_replace('/\([^\(\)]+\)/', '', $line);
 
     // And finally remove excess white-space.
