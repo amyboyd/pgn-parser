@@ -10,5 +10,8 @@
     "autoload": {
         "psr-0": { "AmyBoyd\\PgnParser\\": "src"}
     },
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "~5"
+    }
 }
