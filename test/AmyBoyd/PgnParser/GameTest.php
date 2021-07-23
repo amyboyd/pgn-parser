@@ -41,4 +41,17 @@ class GameTest extends PHPUnit_Framework_TestCase
         $game->getMovesCount()
       );
     }
+
+    public function testGetAndSetSite()
+    {
+        $game = new Game();
+        $this->assertEquals(null, $game->getSite());
+
+        $game->setSite('.');
+        $this->assertEquals(null, $game->getSite());
+
+        $game->setSite('Russia');
+        $this->assertEquals('Russia', $game->getSite());
+    }
+
 }

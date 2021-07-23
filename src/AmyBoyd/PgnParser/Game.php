@@ -102,7 +102,7 @@ class Game
   {
     if ($site === '?' || $site === '') {
       $this->site = null;
-    } elseif (strlen(preg_replace('/[^a-zA-Z]/', '', $site) < 2)) {
+    } elseif (strlen(preg_replace('/[^a-zA-Z]/', '', $site)) < 2) {
       // Some sites have been non-letter gibberish.
       $this->site = null;
     } else {
